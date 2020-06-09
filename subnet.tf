@@ -5,4 +5,10 @@ resource "aws_subnet" "brnck" {
   cidr_block              = "10.0.${count.index}.0/24"
   map_public_ip_on_launch = true
   vpc_id                  = aws_vpc.brnck.id
+
+  tags = map(
+    "Name", var.cluster_name,
+    "kubernetes.io/cluster/${var.cluster_name}", "shared",
+    "kubernetes.io/role/elb", 1,
+  )
 }
