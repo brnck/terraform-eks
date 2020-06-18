@@ -1,32 +1,40 @@
 # terraform-eks
 
-## Purpose
+## Requirements
 
-Homework task for **secret** company
+Make sure you have all steps, described below, completed before proceeding to **How to** step
 
-## Tasks
+* AWS account
+* AWS credentials: `access key_id` and `secret_access_key`
+* Github personal access token with `repo` scope. Ref: https://www.runatlantis.io/docs/access-credentials.html#github
+* Generate random secret for **Github Webhook** at https://www.random.org/passwords/?num=2&len=20&format=html&rnd=new
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html)
+* [Terraform](https://www.terraform.io)
+* [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* [Helm3](https://helm.sh/docs/intro/install/)
 
-* Create your AWS account.
-* Deploy EKS and Atlantis application (https://www.runatlantis.io ) using Terraform and Helm.
-* Configure the application to use your GitHub project repository.
-* Create a pull request against your repository, to prove Atlantis is working.
+## How to
 
-## Functional requirements
+Make sure you have configured AWS profile in `$HOME/.aws` OR export your configuration as environment variables:
+```
+$ export AWS_ACCESS_KEY_ID="anaccesskey"
+$ export AWS_SECRET_ACCESS_KEY="asecretkey"
+$ export AWS_DEFAULT_REGION="eu-west-1"
+```
 
-* 1 VPC, 2 subnets, 1 EKS cluster.
-* Worker autoscaling group with min 1, max 2 workers.
-* K8s role based access is configured with two IAM roles - `eks-admin` (with admin access) and `eks-
-read-only` (for read-only access).
+* `terraform init` - Initialize terraform
+* `terraform apply` - Apply configuration
+* `aws eks update-kubeconfig --name <eks_cluster_name>` - Set-up kube config. Context will be switched to created cluster
+* `helm repo add stable https://kubernetes-charts.storage.googleapis.com` - Add stable charts repository to local environment
+* `kubectl create ns atlantis`
+* Change `atlantis/values.yaml` to your preferred values
 
-## Non-functional requirements
+Deploy atlantis application
+```
+helm upgrade --install atlantis --namespace atlantis stable/atlantis -f atlantis/values.yaml
+```
 
-* All infrastructure is deployed as a code.
-* Deployment doesn't require manual steps.
-* Code is pushed to GitHub, and shared with **secret** company for assessment.
+## Known issues/Missing things
 
-## Evaluation criteria
-
-* Are the requirements met?
-* Can the infrastructure and application be deployed using your code?
-* Does the deployment require manual intervention?
-* Quality of code - is it reusable, is it clearly readable?
+* Cluster is not reachable from outside. Solution: Need to find way to automatically assign security group to workers which would allow traffic to the specific port (ingress controller port. Use 30000-32767. Ref: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport)
+* Find way to grant/remove/promote/demote users access with AWS IAM

@@ -1,24 +1,24 @@
-resource "aws_iam_role_policy_attachment" "brnck-cluster-AmazonEKSClusterPolicy" {
+resource "aws_iam_role_policy_attachment" "eks-cluster-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.brnck-cluster.name
+  role       = aws_iam_role.eks-cluster.name
 }
 
-resource "aws_iam_role_policy_attachment" "brnck-cluster-AmazonEKSServicePolicy" {
+resource "aws_iam_role_policy_attachment" "eks-cluster-AmazonEKSServicePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role       = aws_iam_role.brnck-cluster.name
+  role       = aws_iam_role.eks-cluster.name
 }
 
-resource "aws_iam_role_policy_attachment" "brnck-node-AmazonEKSWorkerNodePolicy" {
+resource "aws_iam_role_policy_attachment" "eks-cluster-node-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.brnck-node.name
+  role       = aws_iam_role.eks-cluster-node.name
 }
 
-resource "aws_iam_role_policy_attachment" "brnck-node-AmazonEKS_CNI_Policy" {
+resource "aws_iam_role_policy_attachment" "eks-cluster-node-AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.brnck-node.name
+  role       = aws_iam_role.eks-cluster-node.name
 }
 
-resource "aws_iam_role_policy_attachment" "brnck-node-AmazonEC2ContainerRegistryReadOnly" {
+resource "aws_iam_role_policy_attachment" "eks-cluster-node-AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.brnck-node.name
+  role       = aws_iam_role.eks-cluster-node.name
 }

@@ -1,14 +1,14 @@
-resource "aws_eks_cluster" "brnck" {
+resource "aws_eks_cluster" "eks-cluster" {
   name     = var.cluster_name
-  role_arn = aws_iam_role.brnck-cluster.arn
+  role_arn = aws_iam_role.eks-cluster.arn
 
   vpc_config {
-    security_group_ids = [aws_security_group.brnck-cluster.id]
-    subnet_ids         = aws_subnet.brnck[*].id
+    security_group_ids = [aws_security_group.eks-cluster.id]
+    subnet_ids         = aws_subnet.eks-cluster[*].id
   }
 
   depends_on = [
-    aws_iam_role_policy_attachment.brnck-cluster-AmazonEKSClusterPolicy,
-    aws_iam_role_policy_attachment.brnck-cluster-AmazonEKSServicePolicy,
+    aws_iam_role_policy_attachment.eks-cluster-AmazonEKSClusterPolicy,
+    aws_iam_role_policy_attachment.eks-cluster-AmazonEKSServicePolicy,
   ]
 }

@@ -1,5 +1,5 @@
-resource "aws_iam_role" "brnck-cluster" {
-  name = "terraform-eks-brnck-cluster"
+resource "aws_iam_role" "eks-cluster" {
+  name = "terraform-eks-eks-cluster"
 
   assume_role_policy = <<POLICY
 {
@@ -17,8 +17,8 @@ resource "aws_iam_role" "brnck-cluster" {
 POLICY
 }
 
-resource "aws_iam_role" "brnck-node" {
-  name = "terraform-eks-brnck-node"
+resource "aws_iam_role" "eks-cluster-node" {
+  name = "terraform-eks-eks-cluster-node"
 
   assume_role_policy = <<POLICY
 {

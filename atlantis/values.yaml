@@ -1,0 +1,60 @@
+## -------------------------- ##
+# Values to override for your instance.
+## -------------------------- ##
+
+## An option to override the atlantis url,
+##   if not using an ingress, set it to the external IP.
+# atlantisUrl: http://10.0.0.0
+
+# Replace this with your own repo whitelist:
+orgWhitelist: "github.com/<user-or-organization>/*"
+
+# If using GitHub, specify like the following:
+github:
+  user: user
+  token: token
+  secret: secret
+
+# To specify AWS credentials to be mapped to ~/.aws:
+# aws:
+#   credentials: |
+#     [default]
+#     aws_access_key_id=YOUR_ACCESS_KEY_ID
+#     aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
+#     region=us-east-1
+#   config: |
+#     [profile a_role_to_assume]
+#     role_arn = arn:aws:iam::123456789:role/service-role/roleToAssume
+#     source_profile = default
+# To reference an already existing Secret object with AWS credentials
+# awsSecretName: 'mysecretwithawscreds'
+
+# allowForkPRs enables atlantis to run on a fork Pull Requests
+allowForkPRs: false
+
+# disableApplyAll disables running `atlantis apply` without any flags
+disableApplyAll: false
+
+service:
+  type: NodePort
+  port: 80
+
+ingress:
+  enabled: false
+
+resources:
+  requests:
+    memory: 1Gi
+    cpu: 100m
+  limits:
+    memory: 1Gi
+    cpu: 100m
+
+# Disk space for Atlantis to check out repositories
+dataStorage: 5Gi
+
+replicaCount: 1
+
+## test container details
+test:
+  enabled: false
