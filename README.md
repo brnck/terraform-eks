@@ -26,15 +26,17 @@ $ export AWS_DEFAULT_REGION="eu-west-1"
 * `terraform apply` - Apply configuration
 * `aws eks update-kubeconfig --name <eks_cluster_name>` - Set-up kube config. Context will be switched to created cluster
 * `helm repo add stable https://kubernetes-charts.storage.googleapis.com` - Add stable charts repository to local environment
+* `helm install nginx-ingress stable/nginx-ingress --set rbac.create=true` - Install nginx loadbalancer
+* Wait for a couple of minutes then execute `kubectl describe services |grep ^LoadBalancer` - You will get your LB public DNS name
 * `kubectl create ns atlantis`
-* Change `atlantis/values.yaml` to your preferred values
+* `cp atlantis/values.yaml atlantis/values_local.yaml` make a copy of a dist file
+* Change `atlantis/values_local.yaml` to your preferred values (Override `ingress.host` value with LB public DNS name)
 
 Deploy atlantis application
 ```
-helm upgrade --install atlantis --namespace atlantis stable/atlantis -f atlantis/values.yaml
+helm upgrade --install atlantis --namespace atlantis stable/atlantis -f atlantis/values_local.yaml
 ```
 
 ## Known issues/Missing things
 
-* Cluster is not reachable from outside. Solution: Need to find way to automatically assign security group to workers which would allow traffic to the specific port (ingress controller port. Use 30000-32767. Ref: https://kubernetes.io/docs/concepts/services-networking/service/#nodeport)
 * Find way to grant/remove/promote/demote users access with AWS IAM
