@@ -1,3 +1,11 @@
+terraform {
+  backend "s3" {
+    bucket = "brnck-eks-terraform-state"
+    key    = "aws/eks"
+    region = "eu-west-1"
+  }
+}
+
 provider "aws" {
   region  = "eu-west-1"
   version = "~> 2.0"
