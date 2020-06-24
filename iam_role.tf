@@ -1,5 +1,5 @@
-resource "aws_iam_role" "eks-cluster" {
-  name = "terraform-eks-eks-cluster"
+resource "aws_iam_role" "eks_cluster" {
+  name = "terraform_eks_cluster"
 
   assume_role_policy = <<POLICY
 {
@@ -17,8 +17,8 @@ resource "aws_iam_role" "eks-cluster" {
 POLICY
 }
 
-resource "aws_iam_role" "eks-cluster-node" {
-  name = "terraform-eks-eks-cluster-node"
+resource "aws_iam_role" "eks_cluster_node" {
+  name = "terraform_eks_cluster_node"
 
   assume_role_policy = <<POLICY
 {
