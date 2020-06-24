@@ -39,4 +39,5 @@ helm upgrade --install atlantis --namespace atlantis stable/atlantis -f atlantis
 
 ## Known issues/Missing things
 
+* `atlantis` chart had a bug with aws credentials handling in version `3.11.1` so make sure you have deployed `>3.11.1`. More info [here](https://github.com/helm/charts/commit/31461bda41a4e7f35246736d226276ff7be20533)
 * Find way to grant/remove/promote/demote users access with AWS IAM

@@ -9,6 +9,22 @@
 # Replace this with your own repo whitelist:
 orgWhitelist: "github.com/<user-or-organization>/*"
 
+## Use Server Side Repo Config,
+## ref: https://www.runatlantis.io/docs/server-side-repo-config.html
+## Example default configuration
+repoConfig: |
+  ---
+  repos:
+  - id: /.*/
+  apply_requirements: [approved, mergeable]
+  workflow: default
+  workflows:
+    default:
+      plan:
+        steps: [init, plan]
+      apply:
+        steps: [apply]
+
 # If using GitHub, specify like the following:
 github:
   user: user
@@ -16,16 +32,16 @@ github:
   secret: secret
 
 # To specify AWS credentials to be mapped to ~/.aws:
-# aws:
-#   credentials: |
-#     [default]
-#     aws_access_key_id=YOUR_ACCESS_KEY_ID
-#     aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
-#     region=us-east-1
-#   config: |
-#     [profile a_role_to_assume]
-#     role_arn = arn:aws:iam::123456789:role/service-role/roleToAssume
-#     source_profile = default
+aws:
+  credentials: |
+    [default]
+    aws_access_key_id=id
+    aws_secret_access_key=access_key
+    region=eu-west-1
+
+  config: |
+    [default]
+    source_profile = default
 # To reference an already existing Secret object with AWS credentials
 # awsSecretName: 'mysecretwithawscreds'
 
@@ -55,26 +71,10 @@ resources:
     cpu: 100m
 
 # Disk space for Atlantis to check out repositories
-dataStorage: 5Gi
+dataStorage: 1Gi
 
 replicaCount: 1
 
 ## test container details
 test:
   enabled: false
-
-# Optionally specify additional environment variables to be populated from Kubernetes secrets.
-# Useful for passing in TF_VAR_foo or other secret environment variables from Kubernetes secrets.
-environmentSecrets:
-  - name: AWS_DEFAULT_REGION
-    secretKeyRef:
-      name: AWS_DEFAULT_REGION
-      key: eu-west-1
-  # - name: AWS_ACCESS_KEY_ID
-  #   secretKeyRef:
-  #     name: AWS_ACCESS_KEY_ID
-  #     key: the_key_of_the_value_in_the_secret
-  # - name: AWS_SECRET_ACCESS_KEY
-  #   secretKeyRef:
-  #     name: AWS_SECRET_ACCESS_KEY
-  #     key: the_key_of_the_value_in_the_secret
