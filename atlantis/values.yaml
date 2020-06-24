@@ -25,6 +25,9 @@ repoConfig: |
       apply:
         steps: [apply]
 
+## defaultTFVersion set the default terraform version to be used in atlantis server
+defaultTFVersion: 0.12.26
+
 # If using GitHub, specify like the following:
 github:
   user: user

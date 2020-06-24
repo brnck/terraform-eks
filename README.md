@@ -24,6 +24,10 @@ $ export AWS_DEFAULT_REGION="eu-west-1"
 
 * `terraform init` - Initialize terraform
 * `terraform apply` - Apply configuration
+```
+!!! IMPORTANTT !!!
+Right now for demonstration purposes s3 backend has been configured in this repository so on initial apply provisioning will fail due to s3 unavailability. As fix for initial provisioning you can use local state persistance and then after first apply switch (migrate) to s3 backend or use already existing s3 bucket for initial provisioning
+```
 * `aws eks update-kubeconfig --name <eks_cluster_name>` - Set-up kube config. Context will be switched to created cluster
 * `helm repo add stable https://kubernetes-charts.storage.googleapis.com` - Add stable charts repository to local environment
 * `helm install nginx-ingress stable/nginx-ingress --set rbac.create=true` - Install nginx loadbalancer
